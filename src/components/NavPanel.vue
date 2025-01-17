@@ -23,6 +23,11 @@
 </template>
 
 <style scoped>
+	#displayLabel {
+		display: block;
+		width: fit-content;
+		padding: 0 0.75rem 0.5rem;
+	}
 	NavToggle {
 		display: block;
 		width: 2.5rem;
@@ -31,8 +36,6 @@
 		border: 4px solid rgb(31, 6, 175);
 		border-radius: 30%;
 		overflow: hidden;
-		margin-left: 1rem;
-		margin-bottom: 1rem;
 	}
 	NavBar {
 		display: none;
