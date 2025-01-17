@@ -63,6 +63,7 @@
 		background-position: 0 85%;
 		padding: 3px 7px;
 	}
+	NavBar > a:focus,
 	NavBar > a:hover {
 		animation-delay: 0.2s;
 		transition: 0.25s;
