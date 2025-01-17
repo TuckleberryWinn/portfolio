@@ -4,7 +4,17 @@
 
 <template>
 	<div>
-		<NavToggle></NavToggle>
+		<label
+			for="displayNav"
+			id="displayLabel"
+		>
+			<NavToggle>///</NavToggle>
+		</label>
+		<input
+			name="displayNav"
+			id="displayNav"
+			type="checkbox"
+		/>
 		<NavBar>
 			<RouterLink to="/">Home</RouterLink>
 			<RouterLink to="/about">About</RouterLink>
@@ -13,10 +23,34 @@
 </template>
 
 <style scoped>
-	NavBar {
-		display: flex;
-		justify-content: space-around;
+	NavToggle {
+		display: block;
+		width: 2.5rem;
+		height: 2.5rem;
+		background-color: black;
+		border: 4px solid rgb(31, 6, 175);
+		border-radius: 30%;
+		overflow: hidden;
+		margin-left: 1rem;
+		margin-bottom: 1rem;
 	}
+	NavBar {
+		display: none;
+	}
+	#displayNav {
+		display: none;
+	}
+	@media (max-width: 680px) {
+		#displayNav:checked ~ NavBar {
+			display: block;
+		}
+		#displayNav:checked ~ NavBar > a {
+			display: block;
+			width: fit-content;
+			margin-left: 1rem;
+		}
+	}
+
 	NavBar > a {
 		font-size: 1.75rem;
 		text-decoration: none;
@@ -39,5 +73,15 @@
 		);
 		background-position: 0 0;
 		border-radius: 8px;
+	}
+
+	@media (min-width: 680px) {
+		NavBar {
+			display: flex;
+			justify-content: space-around;
+		}
+		#displayLabel {
+			display: none;
+		}
 	}
 </style>
