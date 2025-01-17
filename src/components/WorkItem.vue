@@ -14,8 +14,8 @@
 			<h2>
 				{{ props.name }}
 			</h2>
-			<Tag v-for="tags in props.tags">
-				{{ props.tags[0] }}
+			<Tag v-for="tag in props.tags">
+				{{ tag }}
 			</Tag>
 		</DisplayBlock>
 	</RouterLink>
