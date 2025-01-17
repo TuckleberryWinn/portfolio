@@ -1,5 +1,60 @@
-html {
-	background-color: black;
-	color: white;
-	font-family: monospace;
+:root {
+	--pal-background: #1c2638;
+	--pal-header-bg: #23495d;
+	--pal-footer-bg: #23495d;
+	--pal-block-bg: #95e0cc;
+	--pal-block-border: #23495d;
+	--pal-text-light: #daf2e9;
+	--pal-text-dark: #daf2e9;
+	--pal-title: #95e0cc;
+	--pal-highlight-light: #f14e52;
+	--pal-highlight-dark: #9b222b;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: top;
+	color: inherit;
+	line-height: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	min-height: 100vh;
+	color: var(--pal-text-light);
+	background: var(--pal-background);
+	transition:
+		color 0.5s,
+		background-color 0.5s;
+	line-height: 1.6;
+	font-family: monaco, monospace;
+	font-weight: normal;
+	font-size: 15px;
+}
+
+h1 {
+	font-size: 2rem;
+	color: var(--pal-title);
+}
+h2 {
+	font-size: 1.5rem;
+}
+h3 {
+	font-size: 1.25rem;
+}
+h4 {
+	font-size: 1rem;
 }
