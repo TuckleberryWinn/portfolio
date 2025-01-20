@@ -37,7 +37,7 @@
 		status.value = 'Uploaded successfully!';
 		return responseData;
 	};
-	const handleThumbnailChange = async (changeEvent: InputEvent) => {
+	const handleThumbnailChange = async (changeEvent: Event) => {
 		thumbnail.value = '';
 		status.value = 'Processing image';
 		const target = changeEvent.target as HTMLInputElement;
