@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { RouterLink } from 'vue-router';
+	import WorkItemTag from './WorkItemTag.vue';
 	const props = defineProps<{
 		id: string;
 		name: string;
@@ -9,21 +10,24 @@
 
 <template>
 	<RouterLink :to="`/detail/${props.id}`">
-		<DisplayBlock>
-			<PreviewImage> </PreviewImage>
+		<div class="displayBlock">
+			<div class="previewImage"></div>
 			<h2>
 				{{ props.name }}
 			</h2>
-			<Tag v-for="tag in props.tags">
-				{{ tag }}
-			</Tag>
-		</DisplayBlock>
+			<WorkItemTag
+				v-for="tag in props.tags"
+				:tag="tag"
+			/>
+		</div>
 	</RouterLink>
 </template>
 
 <style scoped>
-	DisplayBlock {
-		transition: all 0.33s ease-out;
+	.displayBlock {
+		transition: all 0.33s ease;
+		position: relative;
+		transform: none;
 		display: block;
 		font-weight: bold;
 		color: var(--pal-block-border);
@@ -33,15 +37,13 @@
 		border-radius: 1rem 1rem 0.5rem 0.5rem;
 		overflow: hidden;
 	}
-	DisplayBlock:hover {
-		transition: all 0.33s ease-out;
+	.displayBlock:hover {
 		color: var(--pal-highlight-dark);
 		background-color: var(--pal-highlight-light);
 		border-color: var(--pal-highlight-dark);
-		position: relative;
-		top: -5px;
+		transform: translate(0, -8px);
 	}
-	PreviewImage {
+	.previewImage {
 		display: block;
 		width: 100%;
 		padding-top: 100%;
@@ -53,20 +55,5 @@
 	}
 	h2 {
 		line-height: 3rem;
-	}
-	Tag {
-		transition: all 0.2s ease-out;
-		display: inline-block;
-		color: var(--pal-block-border);
-		border: 3px solid var(--pal-block-border);
-		padding: 4px;
-		margin: 5px;
-		line-height: 170%;
-		background-color: var(--pal-block-bg);
-		border-radius: 12px;
-	}
-	Tag:hover {
-		transition: all 0.2s ease-out;
-		background-color: aliceblue;
 	}
 </style>

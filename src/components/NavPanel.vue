@@ -8,17 +8,17 @@
 			for="displayNav"
 			id="displayLabel"
 		>
-			<NavToggle>///</NavToggle>
+			<div class="navToggle">///</div>
 		</label>
 		<input
 			name="displayNav"
 			id="displayNav"
 			type="checkbox"
 		/>
-		<NavBar>
+		<nav>
 			<RouterLink to="/">Home</RouterLink>
 			<RouterLink to="/about">About</RouterLink>
-		</NavBar>
+		</nav>
 	</div>
 </template>
 
@@ -28,7 +28,7 @@
 		width: fit-content;
 		padding: 0 0.75rem 0.5rem;
 	}
-	NavToggle {
+	.navToggle {
 		display: block;
 		width: 2.5rem;
 		height: 2.5rem;
@@ -37,24 +37,24 @@
 		border-radius: 30%;
 		overflow: hidden;
 	}
-	NavBar {
+	nav {
 		display: none;
 	}
 	#displayNav {
 		display: none;
 	}
 	@media (max-width: 680px) {
-		#displayNav:checked ~ NavBar {
+		#displayNav:checked ~ nav {
 			display: block;
 		}
-		#displayNav:checked ~ NavBar > a {
+		#displayNav:checked ~ nav > a {
 			display: block;
 			width: fit-content;
 			margin-left: 1rem;
 		}
 	}
 
-	NavBar > a {
+	nav > a {
 		font-size: 1.75rem;
 		text-decoration: none;
 		background-image: linear-gradient(120deg, #35d399 0%, #35d399 100%);
@@ -63,8 +63,8 @@
 		background-position: 0 85%;
 		padding: 3px 7px;
 	}
-	NavBar > a:focus,
-	NavBar > a:hover {
+	nav > a:focus,
+	nav > a:hover {
 		animation-delay: 0.2s;
 		transition: 0.25s;
 		font-weight: bold;

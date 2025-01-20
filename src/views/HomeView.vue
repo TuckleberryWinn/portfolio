@@ -6,8 +6,8 @@
 
 <template>
 	<main>
-		<ProjectFilters>Filters go here</ProjectFilters>
-		<ProjectBucket>
+		<div class="projectFilter">Filters go here</div>
+		<div class="projectBucket">
 			<WorkItem
 				v-for="item in data.items"
 				:key="item.id"
@@ -15,12 +15,12 @@
 				:name="item.name"
 				:tags="item.tags"
 			/>
-		</ProjectBucket>
+		</div>
 	</main>
 </template>
 
 <style scoped>
-	ProjectBucket {
+	.projectBucket {
 		display: grid;
 		grid-template-columns: minmax(240px, 60%);
 		gap: 1.5rem;
@@ -28,7 +28,7 @@
 	}
 
 	@media (min-width: 680px) {
-		ProjectBucket {
+		.projectBucket {
 			max-width: 80%;
 			margin-left: auto;
 			margin-right: auto;
