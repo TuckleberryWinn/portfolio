@@ -1,10 +1,13 @@
 <script setup lang="ts">
 	import { encode } from 'base64-arraybuffer';
 	import { computed, ref, watch } from 'vue';
+	import { QuillEditor } from '@vueup/vue-quill';
+	import '@vueup/vue-quill/dist/vue-quill.snow.css';
 	const title = ref('');
 	const slug = ref('');
 	const thumbnail = ref('');
 	const thumbnailType = ref('');
+	const description = ref();
 	const status = ref('');
 	const loading = ref(false);
 	watch(title, (newVal, oldVal) => {
@@ -18,6 +21,7 @@
 			slug: slug.value,
 			thumbnail: thumbnail.value,
 			thumbnailType: thumbnailType.value,
+			description: description.value,
 		};
 		const responseObject = await fetch('/api/submit', {
 			headers: {
@@ -78,6 +82,18 @@
 					accept=".png,.jpg,.gif,.webp"
 				/>
 			</label>
+			<div class="quill-editor">
+				<QuillEditor
+					theme="snow"
+					v-model:content="description"
+					:toolbar="[
+						[{ header: [1, 2, false] }],
+						['bold', 'italic', 'underline'],
+						['image', 'code-block'],
+					]"
+					content-type="html"
+				/>
+			</div>
 			<div>
 				<code>{{ status }}</code>
 			</div>
