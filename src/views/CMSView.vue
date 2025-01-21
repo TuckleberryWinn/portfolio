@@ -3,16 +3,54 @@
 	import { computed, ref, watch } from 'vue';
 	import { QuillEditor } from '@vueup/vue-quill';
 	import '@vueup/vue-quill/dist/vue-quill.snow.css';
+	import WorkItem from '@/components/WorkItem.vue';
+	import WorkItemTag from '@/components/WorkItemTag.vue';
+
+	const projectTags: Array<string> = [
+		'Game Dev',
+		'Web Dev',
+		'2D',
+		'3D',
+		'Writing',
+		'Audio',
+		'Photoshop',
+		'Illustrator',
+		'Unity',
+		'Blender',
+	];
+
 	const title = ref('');
 	const slug = ref('');
 	const thumbnail = ref('');
 	const thumbnailType = ref('');
 	const description = ref();
 	const status = ref('');
+	const currentTag = ref('');
+	const tags = ref<string[]>([]);
 	const loading = ref(false);
 	watch(title, (newVal, oldVal) => {
 		slug.value = newVal.toLocaleLowerCase().replace(/\W/g, '_');
 	});
+	watch(currentTag, (newVal) => {
+		if (!newVal) {
+			return;
+		}
+		currentTag.value = '';
+
+		if (!tags.value.includes(newVal)) {
+			tags.value.push(newVal);
+		}
+	});
+	const handleFormReset = function () {
+		title.value = '';
+		slug.value = '';
+		thumbnail.value = '';
+		thumbnailType.value = '';
+		description.value = '';
+		status.value = '';
+		currentTag.value = '';
+		tags.value = [];
+	};
 	const handleSubmit = async () => {
 		status.value = 'Uploading to server...';
 		const data = {
@@ -22,6 +60,7 @@
 			thumbnail: thumbnail.value,
 			thumbnailType: thumbnailType.value,
 			description: description.value,
+			tags: tags.value,
 		};
 		const responseObject = await fetch('/api/submit', {
 			headers: {
@@ -50,9 +89,15 @@
 		thumbnail.value = encode(buffer);
 		status.value = 'Image processed';
 	};
+
 	const isFormValid = computed(() => {
 		return thumbnail.value && title.value && slug.value;
 	});
+	const removeTag = (tag: string) => {
+		tags.value = tags.value.filter((item) => {
+			return item !== tag;
+		});
+	};
 </script>
 
 <template>
@@ -94,13 +139,39 @@
 					content-type="html"
 				/>
 			</div>
+			<div class="tag-adder">
+				<label class="tag-selector">
+					<span>Select Tags:</span>
+					<select
+						class="tag-dropdown"
+						v-model="currentTag"
+					>
+						<option value="">--Select Tag--</option>
+						<option
+							v-for="tag in projectTags"
+							:value="tag"
+						>
+							{{ tag }}
+						</option>
+					</select>
+				</label>
+				<div class="tag-chips">
+					<WorkItemTag
+						v-for="tag in tags"
+						:tag="tag"
+						:show-delete="true"
+						@delete="removeTag(tag)"
+					/>
+				</div>
+			</div>
 			<div>
 				<code>{{ status }}</code>
 			</div>
 			<div>
 				<input
 					class="inline"
-					type="reset"
+					type="button"
+					@click="handleFormReset"
 					value="Reset"
 				/>
 				<input
@@ -126,7 +197,8 @@
 		line-height: 1.5rem;
 		margin: 1rem;
 	}
-	input {
+	input,
+	select {
 		display: block;
 		color: var(--pal-block-border);
 		background-color: var(--pal-block-bg);
@@ -136,6 +208,7 @@
 		min-width: 6rem;
 		font-size: 1rem;
 	}
+
 	input:disabled {
 		opacity: 0.5;
 	}
