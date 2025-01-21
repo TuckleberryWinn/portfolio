@@ -14,6 +14,13 @@
 		'Blender',
 	];
 	const currentTag = ref('');
+	const updateCurrentTag = function (newTag: string) {
+		if (currentTag.value === newTag) {
+			currentTag.value = '';
+		} else {
+			currentTag.value = newTag;
+		}
+	};
 	const emit = defineEmits<{
 		newFilter: [tag: string];
 	}>();
@@ -24,24 +31,13 @@
 
 <template>
 	<div class="projectFilter">
-		<div class="dropdown skill">
-			<span class="header">Skill</span
-			><span>
-				<WorkItemTag
-					v-for="tag in projectTags"
-					:tag="tag"
-					@click="currentTag = tag"
-			/></span>
-		</div>
-		<div class="dropdown tech"><span class="header">Technology</span></div>
-		<div>
+		<span>
 			<WorkItemTag
-				v-if="currentTag"
-				:tag="currentTag"
-				:show-delete="true"
-				@delete="currentTag = ''"
-			/>
-		</div>
+				v-for="tag in projectTags"
+				:tag="tag"
+				:active-tag="currentTag"
+				@click="updateCurrentTag(tag)"
+		/></span>
 	</div>
 </template>
 
@@ -51,14 +47,6 @@
 		margin: 2rem auto;
 		min-width: 320px;
 		max-width: 800px;
-	}
-	.dropdown .header {
-		font-size: 1.25rem;
-		color: #222034;
-		border: 4px solid #222034;
-		border-radius: 15px;
-		padding: 0.7rem 1rem;
-		background-color: #c37648;
 	}
 	@media (min-width: 680px) {
 		.dropdown .header {

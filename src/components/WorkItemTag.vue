@@ -1,29 +1,26 @@
 <script setup lang="ts">
 	const props = defineProps<{
 		tag: string;
-		showDelete?: boolean;
+		activeTag?: string;
 	}>();
 	const emit = defineEmits<{
-		delete: [];
 		click: [];
 	}>();
+	const isActiveTag = function () {
+		if (props.tag === props.activeTag) {
+			return 'activeTag';
+		}
+	};
 </script>
 
 <template>
 	<span>
 		<button
 			class="tag"
-			:class="props.tag"
+			:class="[props.tag, isActiveTag()]"
 			@click="emit('click')"
 		>
 			{{ props.tag }}
-		</button>
-		<button
-			v-if="showDelete"
-			type="button"
-			@click="emit('delete')"
-		>
-			x
 		</button>
 	</span>
 </template>
@@ -41,18 +38,13 @@
 		font-size: 1rem;
 	}
 	.tag:hover {
-		color: #fbf5ef;
+		transition: 0.3s ease;
+		color: var(--pal-block-bg);
+		background-color: var(--pal-block-border);
+		border-color: var(--pal-block-bg);
 	}
-	.Unity:hover,
-	.Blender:hover,
-	.Photoshop:hover,
-	.Illustrator:hover {
-		background-color: #8b6d9c;
-	}
-	.Game.Dev:hover,
-	.Web.Dev:hover,
-	.\32 D:hover,
-	.\33 D:hover {
-		background-color: #494d7e;
+	.tag.activeTag {
+		color: var(--pal-highlight-dark);
+		background-color: var(--pal-highlight-light);
 	}
 </style>
