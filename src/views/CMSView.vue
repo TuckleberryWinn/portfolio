@@ -3,8 +3,7 @@
 	import { computed, ref, watch } from 'vue';
 	import { QuillEditor } from '@vueup/vue-quill';
 	import '@vueup/vue-quill/dist/vue-quill.snow.css';
-	import WorkItem from '@/components/WorkItem.vue';
-	import WorkItemTag from '@/components/WorkItemTag.vue';
+	import CMSTag from '@/components/CMSTag.vue';
 
 	const projectTags: Array<string> = [
 		'Game Dev',
@@ -127,18 +126,21 @@
 					accept=".png,.jpg,.gif,.webp"
 				/>
 			</label>
-			<div class="quill-editor">
-				<QuillEditor
-					theme="snow"
-					v-model:content="description"
-					:toolbar="[
-						[{ header: [1, 2, false] }],
-						['bold', 'italic', 'underline'],
-						['image', 'code-block'],
-					]"
-					content-type="html"
-				/>
-			</div>
+			<label>
+				<span>Project Description:</span>
+				<div class="quill-editor">
+					<QuillEditor
+						theme="snow"
+						v-model:content="description"
+						:toolbar="[
+							[{ header: [1, 2, false] }],
+							['bold', 'italic', 'underline'],
+							['image', 'code-block'],
+						]"
+						content-type="html"
+					/>
+				</div>
+			</label>
 			<div class="tag-adder">
 				<label class="tag-selector">
 					<span>Select Tags:</span>
@@ -156,7 +158,7 @@
 					</select>
 				</label>
 				<div class="tag-chips">
-					<WorkItemTag
+					<CMSTag
 						v-for="tag in tags"
 						:tag="tag"
 						:show-delete="true"
@@ -167,15 +169,15 @@
 			<div>
 				<code>{{ status }}</code>
 			</div>
-			<div>
+			<div class="control-buttons">
 				<input
-					class="inline"
+					class="inline-buttons"
 					type="button"
 					@click="handleFormReset"
 					value="Reset"
 				/>
 				<input
-					class="inline"
+					class="inline-buttons"
 					type="submit"
 					value="Submit"
 					:disabled="!isFormValid || loading"
@@ -193,9 +195,8 @@
 	}
 	label {
 		display: block;
-		width: fit-content;
 		line-height: 1.5rem;
-		margin: 1rem;
+		margin: 1rem 0;
 	}
 	input,
 	select {
@@ -204,16 +205,46 @@
 		background-color: var(--pal-block-bg);
 		border: 3px solid var(--pal-block-border);
 		border-radius: 4px;
-		margin: 0 1rem;
+		margin-left: 1rem;
 		min-width: 6rem;
 		font-size: 1rem;
+		width: 250px;
 	}
-
+	input::file-selector-button {
+		width: 95px;
+	}
+	.quill-editor {
+		background-color: var(--pal-block-bg);
+		border: 3px solid var(--pal-block-border);
+		color: var(--pal-block-border);
+		min-width: 280px;
+		max-width: 800px;
+	}
+	.quill-editor:hover,
+	.quill-editor:focus-within,
+	.quill-editor:active {
+		border-color: var(--pal-highlight-light);
+	}
+	.ql-editor h1,
+	.ql-editor h2,
+	.ql-editor p {
+		color: var(--pal-block-border);
+	}
 	input:disabled {
 		opacity: 0.5;
 	}
-	input.inline {
+	input.inline-buttons {
 		display: inline-block;
+		width: 40%;
+		min-width: 120px;
+		max-width: 200px;
+		margin: 0;
+	}
+	.control-buttons {
+		display: flex;
+		justify-content: space-around;
+		max-width: 600px;
+		margin: auto;
 	}
 	input:focus,
 	input:hover {
@@ -227,5 +258,11 @@
 	input:hover::placeholder,
 	input:focus::placeholder {
 		color: var(--pal-highlight-dark);
+	}
+	@media (min-width: 680px) {
+		.tag-adder {
+			display: grid;
+			grid-template-columns: minmax(200px, 300px) minmax(125px, auto);
+		}
 	}
 </style>
