@@ -1,22 +1,25 @@
 import http from "node:http";
 import fs from "node:fs/promises";
+import currentData from "../src/assets/data.json" assert { type: "json" };
 import { decode } from "base64-arraybuffer";
 import { parse } from "node:path";
-let goatCount = 0;
 
 const dataDir = "../portfolio/public/";
+const imagedestination = "../portfolio/src/assets/uploaded_images";
 const safeFileNameRegex = /^[a-zA-Z0-9\-_]+$/;
+
+const projectData = JSON.stringify(currentData);
+
 await fs.mkdir(dataDir, { recursive: true });
+await fs.mkdir(imagedestination, { recursive: true });
 
 const handleRequestBody = (request) => {
     return new Promise((resolve) => {
         let body = "";
         request.on("data", function (data) {
             body += data;
-            // console.log("Partial body: " + body);
         });
         request.on("end", function () {
-            // console.log("Body: " + body);
             resolve(body);
         });
     });
@@ -28,31 +31,32 @@ const server = http.createServer(async (request, response) => {
 
     if (request.url === "/") {
         response.writeHead(200, { "Content-Type": "text/html" });
-        response.end(`<h1>Welcome to Goat Page</h1>
-            <p>${goatCount} goats have visited this page.</p>
+        response.end(`<h1>Welcome to the API page</h1>
+            <p>TODO: CMS related documentation</p>
             `);
     } else if (request.url === "/data") {
         response.writeHead(418, { "Content-Type": "application/json" });
         response.end(JSON.stringify({
-            goatCount,
-            data: "Hello World!",
+            title: "Hello API data!",
+            data_destination: dataDir,
+            image_destination: imagedestination,
+            current_project_data: currentData,
         }));
     } else if (request.url.startsWith("/submit") && request.method === "POST") {
         const body = await handleRequestBody(request);
-        // console.log("What is body?", body);
         try {
             const parsed = JSON.parse(body);
             if (!parsed.destination) {
-                throw new Error("Destination is required >:(");
+                throw new Error("Destination is required.");
             }
             if (!safeFileNameRegex.test(parsed.destination)) {
-                throw new Error("Bad file name");
+                throw new Error("Bad file name.");
             }
             if (!parsed.thumbnail) {
-                throw new Error("thumbnail required");
+                throw new Error("thumbnail required.");
             }
             if (!parsed.thumbnailType) {
-                throw new Error("No valid filetype for thumbnail");
+                throw new Error("No valid filetype for thumbnail.");
             }
             if (
                 ![
@@ -63,23 +67,20 @@ const server = http.createServer(async (request, response) => {
                     "image/webp",
                 ].includes(parsed.thumbnailType)
             ) {
-                throw new Error("Invalid thumbnail type");
+                throw new Error("Invalid thumbnail type.");
             }
+            // format names always come in as image/jpg, image/gif, etc.
             let thumbnailExtension = parsed.thumbnailType.split("/").pop();
             if (thumbnailExtension === "jpeg") {
                 thumbnailExtension = "jpg";
             }
             const thumbnailBuffer = decode(parsed.thumbnail);
             const fileName = dataDir + parsed.destination + ".json";
-            const thumbnailName = dataDir + parsed.destination + "." +
+            const thumbnailName = imagedestination + parsed.destination + "." +
                 thumbnailExtension;
-            const output = JSON.stringify({
-                goatCount,
-                parsed,
-            });
+            const output = JSON.stringify({ parsed });
             await fs.writeFile(fileName, output);
             const buffer = Buffer.from(thumbnailBuffer);
-            //    console.log("what is buffer?", buffer);
             await fs.writeFile(thumbnailName, buffer);
             response.writeHead(200, { "Content-Type": "application/json" });
             response.end(output);
@@ -95,7 +96,6 @@ const server = http.createServer(async (request, response) => {
             error: "Baaaahht found :<",
         }));
     }
-    goatCount += 1;
 });
 
 server.listen(8181);
