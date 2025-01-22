@@ -14,6 +14,7 @@
 		bottom: 0;
 		width: 100%;
 		text-align: center;
+		bottom: 0;
 	}
 	.border {
 		background-image: linear-gradient(to top, var(--pal-header-bg) 0%, var(--pal-background) 90%);
