@@ -5,11 +5,16 @@ import { decode } from "base64-arraybuffer";
 import { parse } from "node:path";
 
 const dataDir = "../portfolio/public/";
-const imagedestination = "../portfolio/src/assets/uploaded_images";
+const dataFilePath = "../portfolio/src/assets/data.json";
+const imagedestination = "../portfolio/src/assets/uploaded_images/";
 const safeFileNameRegex = /^[a-zA-Z0-9\-_]+$/;
 
-const projectData = JSON.stringify(currentData);
+//Access project data
+const rawJSON = await fs.readFile(dataFilePath, "utf-8");
+const projectData = JSON.parse(rawJSON);
+let workItemList = projectData.items;
 
+//Ensure write directories are available
 await fs.mkdir(dataDir, { recursive: true });
 await fs.mkdir(imagedestination, { recursive: true });
 
@@ -33,6 +38,7 @@ const server = http.createServer(async (request, response) => {
         response.writeHead(200, { "Content-Type": "text/html" });
         response.end(`<h1>Welcome to the API page</h1>
             <p>TODO: CMS related documentation</p>
+            <p>Visit /data for currently available information</p>
             `);
     } else if (request.url === "/data") {
         response.writeHead(418, { "Content-Type": "application/json" });
@@ -46,6 +52,7 @@ const server = http.createServer(async (request, response) => {
         const body = await handleRequestBody(request);
         try {
             const parsed = JSON.parse(body);
+            //Validating form data
             if (!parsed.destination) {
                 throw new Error("Destination is required.");
             }
@@ -69,21 +76,29 @@ const server = http.createServer(async (request, response) => {
             ) {
                 throw new Error("Invalid thumbnail type.");
             }
+            //------------------Actual Work Being Done------------------
+            //
             // format names always come in as image/jpg, image/gif, etc.
             let thumbnailExtension = parsed.thumbnailType.split("/").pop();
             if (thumbnailExtension === "jpeg") {
                 thumbnailExtension = "jpg";
             }
             const thumbnailBuffer = decode(parsed.thumbnail);
-            const fileName = dataDir + parsed.destination + ".json";
-            const thumbnailName = imagedestination + parsed.destination + "." +
+            const thumbnailName = imagedestination + parsed.destination +
+                "-thumb." +
                 thumbnailExtension;
-            const output = JSON.stringify({ parsed });
-            await fs.writeFile(fileName, output);
             const buffer = Buffer.from(thumbnailBuffer);
             await fs.writeFile(thumbnailName, buffer);
+            parsed.thumbnail = thumbnailName;
+
+            workItemList.push(parsed);
+            let newProjectData = projectData;
+            newProjectData.items = workItemList;
+            const encodedNewData = JSON.stringify(newProjectData);
+            await fs.writeFile(dataFilePath, encodedNewData);
             response.writeHead(200, { "Content-Type": "application/json" });
             response.end(output);
+            //----------------------------------------------------------
         } catch (error) {
             response.writeHead(400, { "Content-Type": "application/json" });
             response.end(JSON.stringify({
