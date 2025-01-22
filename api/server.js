@@ -1,18 +1,11 @@
 import http from "node:http";
 import fs from "node:fs/promises";
-import currentData from "../src/assets/data.json" assert { type: "json" };
 import { decode } from "base64-arraybuffer";
-import { parse } from "node:path";
 
 const dataDir = "../portfolio/public/";
 const dataFilePath = "../portfolio/src/assets/data.json";
-const imagedestination = "../portfolio/src/assets/uploaded_images/";
+const imagedestination = "../portfolio/public/images/";
 const safeFileNameRegex = /^[a-zA-Z0-9\-_]+$/;
-
-//Access project data
-const rawJSON = await fs.readFile(dataFilePath, "utf-8");
-const projectData = JSON.parse(rawJSON);
-let workItemList = projectData.items;
 
 //Ensure write directories are available
 await fs.mkdir(dataDir, { recursive: true });
@@ -53,10 +46,10 @@ const server = http.createServer(async (request, response) => {
         try {
             const parsed = JSON.parse(body);
             //Validating form data
-            if (!parsed.destination) {
+            if (!parsed.id) {
                 throw new Error("Destination is required.");
             }
-            if (!safeFileNameRegex.test(parsed.destination)) {
+            if (!safeFileNameRegex.test(parsed.id)) {
                 throw new Error("Bad file name.");
             }
             if (!parsed.thumbnail) {
@@ -78,26 +71,33 @@ const server = http.createServer(async (request, response) => {
             }
             //------------------Actual Work Being Done------------------
             //
+            //Access project data
+            const rawJSON = await fs.readFile(dataFilePath, "utf-8");
+            const projectData = JSON.parse(rawJSON);
             // format names always come in as image/jpg, image/gif, etc.
             let thumbnailExtension = parsed.thumbnailType.split("/").pop();
             if (thumbnailExtension === "jpeg") {
                 thumbnailExtension = "jpg";
             }
             const thumbnailBuffer = decode(parsed.thumbnail);
-            const thumbnailName = imagedestination + parsed.destination +
+            const thumbnailName = parsed.id +
                 "-thumb." +
                 thumbnailExtension;
+            const thumbnailAbsolutePath = imagedestination +
+                thumbnailName;
             const buffer = Buffer.from(thumbnailBuffer);
-            await fs.writeFile(thumbnailName, buffer);
-            parsed.thumbnail = thumbnailName;
+            await fs.writeFile(thumbnailAbsolutePath, buffer);
+            parsed.thumbnail = "images/" + thumbnailName;
+            delete parsed.thumbnailType;
 
-            workItemList.push(parsed);
-            let newProjectData = projectData;
-            newProjectData.items = workItemList;
-            const encodedNewData = JSON.stringify(newProjectData);
+            projectData.items = projectData.items.filter((item) => {
+                return item.id !== parsed.id;
+            });
+            projectData.items.push(parsed);
+            const encodedNewData = JSON.stringify(projectData);
             await fs.writeFile(dataFilePath, encodedNewData);
             response.writeHead(200, { "Content-Type": "application/json" });
-            response.end(output);
+            response.end(JSON.stringify(parsed));
             //----------------------------------------------------------
         } catch (error) {
             response.writeHead(400, { "Content-Type": "application/json" });
@@ -113,4 +113,7 @@ const server = http.createServer(async (request, response) => {
     }
 });
 
-server.listen(8181);
+const portNumber = 8181;
+server.listen(portNumber, () => {
+    console.log(`Server has started at http://localhost:${portNumber}`);
+});

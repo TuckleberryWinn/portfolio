@@ -19,7 +19,7 @@
 	];
 
 	const title = ref('');
-	const slug = ref('');
+	const id = ref('');
 	const thumbnail = ref('');
 	const thumbnailType = ref('');
 	const description = ref();
@@ -28,7 +28,7 @@
 	const tags = ref<string[]>([]);
 	const loading = ref(false);
 	watch(title, (newVal, oldVal) => {
-		slug.value = newVal.toLocaleLowerCase().replace(/\W/g, '_');
+		id.value = newVal.toLocaleLowerCase().replace(/\W/g, '_');
 	});
 	watch(currentTag, (newVal) => {
 		if (!newVal) {
@@ -42,7 +42,7 @@
 	});
 	const handleFormReset = function () {
 		title.value = '';
-		slug.value = '';
+		id.value = '';
 		thumbnail.value = '';
 		thumbnailType.value = '';
 		description.value = '';
@@ -54,8 +54,7 @@
 		status.value = 'Uploading to server...';
 		const data = {
 			title: title.value,
-			destination: slug.value,
-			slug: slug.value,
+			id: id.value,
 			thumbnail: thumbnail.value,
 			thumbnailType: thumbnailType.value,
 			description: description.value,
@@ -90,7 +89,7 @@
 	};
 
 	const isFormValid = computed(() => {
-		return thumbnail.value && title.value && slug.value;
+		return thumbnail.value && title.value && id.value;
 	});
 	const removeTag = (tag: string) => {
 		tags.value = tags.value.filter((item) => {
@@ -114,7 +113,7 @@
 				<span>Slug Title:</span>
 				<input
 					type="text"
-					v-model="slug"
+					v-model="id"
 					placeholder="project-title"
 				/>
 			</label>

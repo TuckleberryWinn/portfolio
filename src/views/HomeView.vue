@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import { ref, computed } from 'vue';
-	import WorkItem from '../components/WorkItem.vue';
+	import WorkItem, { type WorkItemData } from '../components/WorkItem.vue';
 	import data from '../assets/data.json';
 	import ProjectFilterPanel from '../components/ProjectFilterPanel.vue';
 	console.log('what is data?', data);
 
 	const currentTag = ref('');
-	const filteredItems = computed(() => {
-		let list = data.items;
+	const filteredItems = computed<WorkItemData[]>(() => {
+		let list = data.items as unknown as WorkItemData[];
 		if (currentTag.value) {
 			list = list.filter((item) => {
 				return item.tags.includes(currentTag.value);
@@ -24,9 +24,7 @@
 			<WorkItem
 				v-for="item in filteredItems"
 				:key="item.id"
-				:id="item.id"
-				:name="item.name"
-				:tags="item.tags"
+				:item="item"
 			/>
 		</div>
 	</main>

@@ -1,22 +1,35 @@
+<script lang="ts">
+	export type WorkItemData = {
+		id: string;
+		title: string;
+		thumbnail: string;
+		desciption: string;
+		tags: string[];
+	};
+</script>
+
 <script setup lang="ts">
 	import { RouterLink } from 'vue-router';
 	import WorkItemTag from './WorkItemTag.vue';
-	const props = defineProps<{
-		id: string;
-		name: string;
-		tags: string[];
+	const { item } = defineProps<{
+		item: WorkItemData;
 	}>();
 </script>
 
 <template>
-	<RouterLink :to="`/detail/${props.id}`">
+	<RouterLink :to="`/detail/${item.id}`">
 		<div class="displayBlock">
-			<div class="previewImage"></div>
-			<h2>
-				{{ props.name }}
-			</h2>
+			<div
+				class="previewImage"
+				:style="{
+					backgroundImage: `url(${item.thumbnail})`,
+				}"
+			>
+				Goats
+			</div>
+			<h2>{{ item.title }}</h2>
 			<WorkItemTag
-				v-for="tag in props.tags"
+				v-for="tag in item.tags"
 				:tag="tag"
 			/>
 		</div>
@@ -48,6 +61,9 @@
 		width: 100%;
 		padding-top: 100%;
 		background-color: black;
+		background-repeat: none;
+		background-size: cover;
+		background-position: center;
 	}
 	a {
 		text-decoration: none;
