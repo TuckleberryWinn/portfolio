@@ -72,6 +72,13 @@
 			"thumbnail": "images/test_45_4545_4-thumb.jpg",
 			"description": "projectDetails/test_45_4545_4.html",
 			"tags": ["Illustrator", "3D"]
+		},
+		{
+			"title": "Title asas",
+			"id": "title_asas",
+			"thumbnail": "images/title_asas-thumb.jpg",
+			"description": "projectDetails/title_asas.html",
+			"tags": ["3D", "Blender", "2D"]
 		}
 	]
 }

@@ -45,12 +45,13 @@
 	}
 	.tag:hover {
 		transition: 0.3s ease;
-		color: var(--pal-block-bg);
-		background-color: var(--pal-block-border);
-		border-color: var(--pal-block-bg);
-	}
-	.tag.activeTag {
+
 		color: var(--pal-highlight-dark);
 		background-color: var(--pal-highlight-light);
+	}
+	.tag.activeTag {
+		color: var(--pal-block-bg);
+		background-color: var(--pal-block-border);
+		border-color: var(--pal-highlight-dark);
 	}
 </style>

@@ -6,9 +6,8 @@
 	<div>
 		<label
 			for="displayNav"
-			id="displayLabel"
+			class="navToggle"
 		>
-			<div class="navToggle">///</div>
 		</label>
 		<input
 			name="displayNav"
@@ -23,35 +22,43 @@
 </template>
 
 <style scoped>
-	#displayLabel {
+	.navToggle {
 		display: block;
 		width: fit-content;
-		padding: 0 0.75rem 0.5rem;
-	}
-	.navToggle {
+		padding: 0 1.15rem 2.25rem;
+		transition: 0.3s ease;
 		display: block;
 		width: 2.5rem;
 		height: 2.5rem;
-		background-color: black;
-		border: 4px solid rgb(31, 6, 175);
+		background-color: var(--pal-block-bg);
+		border: 4px solid var(--pal-highlight-dark);
 		border-radius: 30%;
 		overflow: hidden;
+		background-image: url(../assets/svg/menu-burger.svg);
+		background-repeat: no-repeat;
+		background-size: 85%;
+		background-position: center;
 	}
+	.navToggle:hover {
+		border-color: var(--pal-highlight-dark);
+		background-color: var(--pal-highlight-light);
+	}
+
+	@media (max-width: 680px) {
+		input:checked ~ nav {
+			display: flex;
+			flex-direction: column;
+			width: 8rem;
+			margin-left: 1rem;
+		}
+	}
+
 	nav {
 		display: none;
 	}
+
 	#displayNav {
 		display: none;
-	}
-	@media (max-width: 680px) {
-		#displayNav:checked ~ nav {
-			display: block;
-		}
-		#displayNav:checked ~ nav > a {
-			display: block;
-			width: fit-content;
-			margin-left: 1rem;
-		}
 	}
 
 	nav > a {
@@ -62,6 +69,8 @@
 		background-size: 100% 0.25em;
 		background-position: 0 85%;
 		padding: 3px 7px;
+		margin-left: 0.5rem;
+		margin-top: 1rem;
 	}
 	nav > a:focus,
 	nav > a:hover {
@@ -80,11 +89,13 @@
 	}
 
 	@media (min-width: 680px) {
-		NavBar {
+		nav {
 			display: flex;
+			margin: auto;
+			max-width: 600px;
 			justify-content: space-around;
 		}
-		#displayLabel {
+		.navToggle {
 			display: none;
 		}
 	}
