@@ -22,6 +22,7 @@
 	const id = ref('');
 	const thumbnail = ref('');
 	const thumbnailType = ref('');
+	const thumbnailKey = ref(Date.now());
 	const description = ref();
 	const status = ref('');
 	const currentTag = ref('');
@@ -45,7 +46,8 @@
 		id.value = '';
 		thumbnail.value = '';
 		thumbnailType.value = '';
-		description.value = '';
+		thumbnailKey.value = Date.now();
+		description.value = '<p></p>';
 		status.value = '';
 		currentTag.value = '';
 		tags.value = [];
@@ -120,6 +122,7 @@
 			<label>
 				<span>Cover Image:</span>
 				<input
+					:key="thumbnailKey"
 					type="file"
 					@change="handleThumbnailChange"
 					accept=".png,.jpg,.gif,.webp"
