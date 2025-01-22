@@ -1,25 +1,13 @@
 <script setup lang="ts">
-	import { ref, computed } from 'vue';
-	import WorkItem, { type WorkItemData } from '../components/WorkItem.vue';
-	import data from '../assets/data.json';
+	import WorkItem from '../components/WorkItem.vue';
 	import ProjectFilterPanel from '../components/ProjectFilterPanel.vue';
-	console.log('what is data?', data);
-
-	const currentTag = ref('');
-	const filteredItems = computed<WorkItemData[]>(() => {
-		let list = data.items as unknown as WorkItemData[];
-		if (currentTag.value) {
-			list = list.filter((item) => {
-				return item.tags.includes(currentTag.value);
-			});
-		}
-		return list;
-	});
+	import useTagManager from '@/composables/useTagManager';
+	const { filteredItems } = useTagManager();
 </script>
 
 <template>
 	<main>
-		<ProjectFilterPanel @new-filter="currentTag = $event" />
+		<ProjectFilterPanel />
 		<div class="projectBucket">
 			<WorkItem
 				v-for="item in filteredItems"

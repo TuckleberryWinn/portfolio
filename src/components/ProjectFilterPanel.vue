@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch } from 'vue';
+	import useTagManager from '@/composables/useTagManager';
 	import WorkItemTag from './WorkItemTag.vue';
 	const projectTags: Array<string> = [
 		'Game Dev',
@@ -13,20 +13,7 @@
 		'Unity',
 		'Blender',
 	];
-	const currentTag = ref('');
-	const updateCurrentTag = function (newTag: string) {
-		if (currentTag.value === newTag) {
-			currentTag.value = '';
-		} else {
-			currentTag.value = newTag;
-		}
-	};
-	const emit = defineEmits<{
-		newFilter: [tag: string];
-	}>();
-	watch(currentTag, (newVal) => {
-		emit('newFilter', newVal);
-	});
+	const { currentTag } = useTagManager();
 </script>
 
 <template>
@@ -35,8 +22,6 @@
 			<WorkItemTag
 				v-for="tag in projectTags"
 				:tag="tag"
-				:active-tag="currentTag"
-				@click="updateCurrentTag(tag)"
 		/></span>
 	</div>
 </template>

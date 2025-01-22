@@ -1,24 +1,23 @@
 <script setup lang="ts">
+	import useTagManager from '@/composables/useTagManager';
+	import { computed } from 'vue';
+	const { currentTag } = useTagManager();
 	const props = defineProps<{
 		tag: string;
-		activeTag?: string;
 	}>();
-	const emit = defineEmits<{
-		click: [];
-	}>();
-	const isActiveTag = function () {
-		if (props.tag === props.activeTag) {
+	const isActiveTag = computed(() => {
+		if (props.tag === currentTag.value) {
 			return 'activeTag';
 		}
-	};
+	});
 </script>
 
 <template>
 	<span>
 		<button
 			class="tag"
-			:class="[props.tag, isActiveTag()]"
-			@click="emit('click')"
+			:class="[props.tag, isActiveTag]"
+			@click="currentTag = props.tag"
 		>
 			{{ props.tag }}
 		</button>
