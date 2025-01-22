@@ -1,1 +1,77 @@
-{"items":[{"title":"Happy Motel","id":"happy-motel","description":"<p>This is a Unity game</p>","tags":["Unity","Game Dev","3D"]},{"title":"Rent's Due","id":"rents-due","description":"<p>This is another Unity game</p><div><img src=\"https://i.imgur.com/6oyysWw.jpeg\" /></div>","tags":["Unity","Game Dev","3D","2D"]},{"title":"test1test 2","id":"test1test_2","thumbnail":"../portfolio/src/assets/uploaded_images/test1test_2-thumb.jpg","thumbnailType":"image/jpeg","description":"<p>123455</p>","tags":["Game Dev","Audio","Illustrator"]},{"title":"test 205050","id":"test_205050","thumbnail":"images/test_205050-thumb.jpg","description":"<p>123 123 123</p>","tags":["Web Dev","Photoshop"]},{"title":"goose testing","id":"goose_testing","thumbnail":"images/goose_testing-thumb.jpg","description":"<p>honk honk 123 123 123</p>","tags":["2D","Unity"]},{"title":"Goated Content","id":"goated_content","thumbnail":"images/goated_content-thumb.webp","description":"<p>Bahhhhhh</p>","tags":["Web Dev","Blender"]},{"title":"Mobile Uploading","id":"mobile_uploading","thumbnail":"images/mobile_uploading-thumb.png","description":"<p>Dr. Filling Deez Fields</p>","tags":["Photoshop","Writing"]},{"title":"Tags Go Brrrr","id":"tags_go_brrrr","thumbnail":"images/tags_go_brrrr-thumb.jpg","description":"<p>Overtag tags</p>","tags":["Game Dev","Web Dev","2D","3D","Writing","Audio","Photoshop","Illustrator","Unity","Blender"]}]}
+{
+	"items": [
+		{
+			"title": "Happy Motel",
+			"id": "happy-motel",
+			"description": "<p>This is a Unity game</p>",
+			"tags": ["Unity", "Game Dev", "3D"]
+		},
+		{
+			"title": "Rent's Due",
+			"id": "rents-due",
+			"description": "<p>This is another Unity game</p><div><img src=\"https://i.imgur.com/6oyysWw.jpeg\" /></div>",
+			"tags": ["Unity", "Game Dev", "3D", "2D"]
+		},
+		{
+			"title": "test1test 2",
+			"id": "test1test_2",
+			"thumbnail": "../portfolio/src/assets/uploaded_images/test1test_2-thumb.jpg",
+			"thumbnailType": "image/jpeg",
+			"description": "<p>123455</p>",
+			"tags": ["Game Dev", "Audio", "Illustrator"]
+		},
+		{
+			"title": "test 205050",
+			"id": "test_205050",
+			"thumbnail": "images/test_205050-thumb.jpg",
+			"description": "<p>123 123 123</p>",
+			"tags": ["Web Dev", "Photoshop"]
+		},
+		{
+			"title": "goose testing",
+			"id": "goose_testing",
+			"thumbnail": "images/goose_testing-thumb.jpg",
+			"description": "<p>honk honk 123 123 123</p>",
+			"tags": ["2D", "Unity"]
+		},
+		{
+			"title": "Goated Content",
+			"id": "goated_content",
+			"thumbnail": "images/goated_content-thumb.webp",
+			"description": "<p>Bahhhhhh</p>",
+			"tags": ["Web Dev", "Blender"]
+		},
+		{
+			"title": "Mobile Uploading",
+			"id": "mobile_uploading",
+			"thumbnail": "images/mobile_uploading-thumb.png",
+			"description": "<p>Dr. Filling Deez Fields</p>",
+			"tags": ["Photoshop", "Writing"]
+		},
+		{
+			"title": "Tags Go Brrrr",
+			"id": "tags_go_brrrr",
+			"thumbnail": "images/tags_go_brrrr-thumb.jpg",
+			"description": "<p>Overtag tags</p>",
+			"tags": [
+				"Game Dev",
+				"Web Dev",
+				"2D",
+				"3D",
+				"Writing",
+				"Audio",
+				"Photoshop",
+				"Illustrator",
+				"Unity",
+				"Blender"
+			]
+		},
+		{
+			"title": "test 45 4545 4",
+			"id": "test_45_4545_4",
+			"thumbnail": "images/test_45_4545_4-thumb.jpg",
+			"description": "projectDetails/test_45_4545_4.html",
+			"tags": ["Illustrator", "3D"]
+		}
+	]
+}

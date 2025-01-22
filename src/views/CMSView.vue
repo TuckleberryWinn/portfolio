@@ -23,7 +23,7 @@
 	const thumbnail = ref('');
 	const thumbnailType = ref('');
 	const thumbnailKey = ref(Date.now());
-	const description = ref();
+	const description = ref('');
 	const status = ref('');
 	const currentTag = ref('');
 	const tags = ref<string[]>([]);

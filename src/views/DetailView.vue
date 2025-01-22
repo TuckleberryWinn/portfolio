@@ -1,18 +1,31 @@
 <script setup lang="ts">
+	import { ref } from 'vue';
 	import data from '../assets/data.json';
 	const props = defineProps<{
 		id: string;
 	}>();
 	const item = data.items.find((item) => item.id === props.id);
+	const isLoading = ref(true);
+	const content = ref('');
+	const loadContent = async () => {
+		if (!item) {
+			throw new Error('No page item');
+		}
+		const response = await fetch(item?.description);
+		const body = await response.text();
+		content.value = body;
+		isLoading.value = false;
+	};
+	loadContent();
 </script>
 
 <template>
 	<div class="detail">
-		<h1>This is a detail page</h1>
 		<div v-if="!item">Invalid ID</div>
+		<div v-if="isLoading">Loading Page...</div>
 		<div v-else>
-			<h1>{{ item.title }}</h1>
-			<div v-html="item.description"></div>
+			<h1>{{ item?.title }}</h1>
+			<div v-html="content"></div>
 		</div>
 	</div>
 </template>

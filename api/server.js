@@ -4,12 +4,14 @@ import { decode } from "base64-arraybuffer";
 
 const dataDir = "../portfolio/public/";
 const dataFilePath = "../portfolio/src/assets/data.json";
-const imagedestination = "../portfolio/public/images/";
+const imageDestination = "../portfolio/public/images/";
+const projectDetailDestination = "../portfolio/public/projectDetails/";
 const safeFileNameRegex = /^[a-zA-Z0-9\-_]+$/;
 
 //Ensure write directories are available
 await fs.mkdir(dataDir, { recursive: true });
-await fs.mkdir(imagedestination, { recursive: true });
+await fs.mkdir(imageDestination, { recursive: true });
+await fs.mkdir(projectDetailDestination, { recursive: true });
 
 const handleRequestBody = (request) => {
     return new Promise((resolve) => {
@@ -38,7 +40,7 @@ const server = http.createServer(async (request, response) => {
         response.end(JSON.stringify({
             title: "Hello API data!",
             data_destination: dataDir,
-            image_destination: imagedestination,
+            image_destination: imageDestination,
             current_project_data: currentData,
         }));
     } else if (request.url.startsWith("/submit") && request.method === "POST") {
@@ -83,12 +85,20 @@ const server = http.createServer(async (request, response) => {
             const thumbnailName = parsed.id +
                 "-thumb." +
                 thumbnailExtension;
-            const thumbnailAbsolutePath = imagedestination +
+            const thumbnailAbsolutePath = imageDestination +
                 thumbnailName;
             const buffer = Buffer.from(thumbnailBuffer);
             await fs.writeFile(thumbnailAbsolutePath, buffer);
             parsed.thumbnail = "images/" + thumbnailName;
             delete parsed.thumbnailType;
+
+            //Seperate detail section from data file
+            const projectDetailString = parsed.description;
+            const projectDetailAbsolutePath = projectDetailDestination +
+                parsed.id + ".html";
+
+            parsed.description = "projectDetails/" + parsed.id + ".html";
+            await fs.writeFile(projectDetailAbsolutePath, projectDetailString);
 
             projectData.items = projectData.items.filter((item) => {
                 return item.id !== parsed.id;
