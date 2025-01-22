@@ -31,6 +31,25 @@
 </template>
 
 <style>
+	audio {
+		display: block;
+		margin: 2rem auto;
+		border: 0.3rem solid #35d399;
+		border-radius: 2rem;
+	}
+	.detail {
+		min-width: 320px;
+		width: 80%;
+		max-width: 800px;
+		margin: auto;
+		text-align: center;
+	}
+	.detail img {
+		min-width: 300px;
+		width: 100%;
+		max-width: 750px;
+		border: 0.3rem solid #35d399;
+	}
 	@media (min-width: 1024px) {
 		.about {
 			min-height: 78vh;

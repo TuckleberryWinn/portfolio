@@ -2,9 +2,87 @@
 	"items": [
 		{
 			"title": "Happy Motel",
-			"id": "happy-motel",
-			"description": "<p>This is a Unity game</p>",
-			"tags": ["Unity", "Game Dev", "3D"]
+			"id": "happy_motel",
+			"thumbnail": "images/happy_motel-thumb.jpg",
+			"description": "projectDetails/happy_motel.html",
+			"tags": ["3D", "Blender", "Unity", "Photoshop", "Writing", "Game Dev"]
+		},
+		{
+			"title": "Rents Due",
+			"id": "rents_due",
+			"thumbnail": "images/rents_due-thumb.png",
+			"description": "projectDetails/rents_due.html",
+			"tags": ["2D", "3D", "Game Dev", "Unity", "Writing", "Blender", "Photoshop"]
+		},
+		{
+			"title": "SLC Blender User Group",
+			"id": "slc_blender_user_group",
+			"thumbnail": "images/slc_blender_user_group-thumb.jpg",
+			"description": "projectDetails/slc_blender_user_group.html",
+			"tags": ["Web Dev", "3D", "Blender", "Photoshop"]
+		},
+		{
+			"title": "Misrule Improv",
+			"id": "misrule_improv",
+			"thumbnail": "images/misrule_improv-thumb.png",
+			"description": "projectDetails/misrule_improv.html",
+			"tags": ["2D", "Illustrator", "Photoshop"]
+		},
+		{
+			"title": "Court of Hearts",
+			"id": "court_of_hearts",
+			"thumbnail": "images/court_of_hearts-thumb.png",
+			"description": "projectDetails/court_of_hearts.html",
+			"tags": ["2D", "Illustrator"]
+		},
+		{
+			"title": "Unreleased JSR Inspired Project",
+			"id": "unreleased_jsr_inspired_project",
+			"thumbnail": "images/unreleased_jsr_inspired_project-thumb.jpg",
+			"description": "projectDetails/unreleased_jsr_inspired_project.html",
+			"tags": ["Audio"]
+		},
+		{
+			"title": "Shmear Formalities",
+			"id": "shmear_formalities",
+			"thumbnail": "images/shmear_formalities-thumb.jpg",
+			"description": "projectDetails/shmear_formalities.html",
+			"tags": ["Game Dev", "3D", "Unity", "Blender"]
+		},
+		{
+			"title": "Handpainted Trimsheet",
+			"id": "handpainted_trimsheet",
+			"thumbnail": "images/handpainted_trimsheet-thumb.jpg",
+			"description": "projectDetails/handpainted_trimsheet.html",
+			"tags": ["Blender", "Photoshop", "3D"]
+		},
+		{
+			"title": "Hand-Painted Texture Shader Nodes",
+			"id": "hand_painted_texture_shader_nodes",
+			"thumbnail": "images/hand_painted_texture_shader_nodes-thumb.jpg",
+			"description": "projectDetails/hand_painted_texture_shader_nodes.html",
+			"tags": ["Blender", "3D"]
+		},
+		{
+			"title": "Flappy Goat",
+			"id": "flappy_goat",
+			"thumbnail": "images/flappy_goat-thumb.png",
+			"description": "projectDetails/flappy_goat.html",
+			"tags": ["3D", "Blender"]
+		},
+		{
+			"title": "Desert Dessert",
+			"id": "desert_dessert",
+			"thumbnail": "images/desert_dessert-thumb.jpg",
+			"description": "projectDetails/desert_dessert.html",
+			"tags": ["Unity", "2D", "Game Dev"]
+		},
+		{
+			"title": "Roguemon",
+			"id": "roguemon",
+			"thumbnail": "images/roguemon-thumb.jpg",
+			"description": "projectDetails/roguemon.html",
+			"tags": ["Blender", "Unity", "3D", "Game Dev"]
 		}
 	]
 }
