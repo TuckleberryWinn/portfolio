@@ -17,23 +17,26 @@
 </script>
 
 <template>
-	<RouterLink :to="`/detail/${item.id}`">
-		<div class="displayBlock">
+	<div class="displayBlock">
+		<RouterLink
+			:to="`/detail/${item.id}`"
+			class="boxHeight"
+		>
 			<div
 				class="previewImage"
 				:style="{
 					backgroundImage: `url(${item.thumbnail})`,
 				}"
-			>
-				Goats
-			</div>
+			></div>
 			<h2>{{ item.title }}</h2>
+		</RouterLink>
+		<div class="tags">
 			<WorkItemTag
 				v-for="tag in item.tags"
 				:tag="tag"
 			/>
 		</div>
-	</RouterLink>
+	</div>
 </template>
 
 <style scoped>
@@ -54,7 +57,11 @@
 		color: var(--pal-highlight-dark);
 		background-color: var(--pal-highlight-light);
 		border-color: var(--pal-highlight-dark);
-		transform: translate(0, -8px);
+		transform: translate(0, -6px);
+	}
+	.boxHeight {
+		padding-bottom: 6rem;
+		display: block;
 	}
 	.previewImage {
 		display: block;
@@ -71,5 +78,15 @@
 	}
 	h2 {
 		line-height: 3rem;
+	}
+	.tags {
+		position: absolute;
+		bottom: 0;
+		height: 6.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		align-items: center;
+		width: 100%;
 	}
 </style>

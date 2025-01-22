@@ -10,6 +10,13 @@
 			return 'activeTag';
 		}
 	});
+	const updateCurrentTag = function () {
+		if (currentTag.value === props.tag) {
+			currentTag.value = '';
+		} else {
+			currentTag.value = props.tag;
+		}
+	};
 </script>
 
 <template>
@@ -17,7 +24,7 @@
 		<button
 			class="tag"
 			:class="[props.tag, isActiveTag]"
-			@click="currentTag = props.tag"
+			@click="updateCurrentTag"
 		>
 			{{ props.tag }}
 		</button>
