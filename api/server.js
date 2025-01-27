@@ -36,13 +36,23 @@ const server = http.createServer(async (request, response) => {
             <p>Visit /data for currently available information</p>
             `);
     } else if (request.url === "/data") {
-        response.writeHead(418, { "Content-Type": "application/json" });
-        response.end(JSON.stringify({
-            title: "Hello API data!",
-            data_destination: dataDir,
-            image_destination: imageDestination,
-            current_project_data: currentData,
-        }));
+        try {
+            const rawJSON = await fs.readFile(dataFilePath, "utf-8");
+            const projectData = JSON.parse(rawJSON);
+            response.writeHead(418, { "Content-Type": "application/json" });
+            response.end(JSON.stringify({
+                title: "Hello API data!",
+                data_destination: dataDir,
+                image_destination: imageDestination,
+                current_project_data: projectData,
+            }));
+        } catch (error) {
+            console.error("Unable to read JSON file");
+            response.writeHead(500, { "Content-Type": "application/json" });
+            response.end(JSON.stringify({
+                error: error.message,
+            }));
+        }
     } else if (request.url.startsWith("/submit") && request.method === "POST") {
         const body = await handleRequestBody(request);
         try {
