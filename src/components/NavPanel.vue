@@ -23,7 +23,10 @@
 			<RouterLink to="/">Home</RouterLink>
 			<RouterLink to="/about">About</RouterLink>
 
-			<component :is="extras" />
+			<component
+				:is="extras"
+				class="dev"
+			/>
 		</nav>
 	</div>
 </template>
@@ -93,6 +96,10 @@
 		);
 		background-position: 0 0;
 		border-radius: 8px;
+	}
+
+	nav span.dev {
+		display: none;
 	}
 
 	@media (min-width: 680px) {
